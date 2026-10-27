@@ -1,62 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Interactive Map</title>
-    <link rel="stylesheet" href="https://unpkg.com" />
-    <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #111;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#191c23">
+
+  <title>Minecraft Interactive Map</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">M</span>
+      <div>
+        <h1>Mydei's Milk</h1>
+        <p>Интерактивная карта майнкрафт</p>
+      </div>
+    </div>
 
-    <div id="map"></div>
+    <div class="topbar-actions">
+      <span id="tile-count">Загрузка карты...</span>
+      <button id="fit-map" type="button">Показать всю карту</button>
+    </div>
+  </header>
 
-    <script src="https://unpkg.com"></script>
-    <script>
-        // 1. Создаем карту с простой плоской системой координат
-        const map = L.map('map', {
-            crs: L.CRS.Simple,
-            minZoom: -2,  // Позволяет отдалять карту сильнее
-            maxZoom: 1,   // Максимальное приближение
-            zoomSnap: 0.5 // Более плавное приближение в VS Code
-        });
+  <main>
+    <div id="map" aria-label="Интерактивная карта Minecraft"></div>
 
-        // 2. Подключаем ваши тайлы 1024x1024
-        const tileLayer = L.tileLayer('map/{z}/{x}_{y}.png', {
-            tileSize: 1024, // Указываем точный размер ваших картинок
-            noWrap: true,
-            continuousWorld: true
-        }).addTo(map);
+    <section class="coordinate-panel">
+      <div>
+        <span class="coordinate-label">X</span>
+        <strong id="coord-x">—</strong>
+      </div>
 
-        // 3. Центрируем карту (примерно на первый тайл)
-        map.setView([-512, 512], -1);
+      <div>
+        <span class="coordinate-label">Z</span>
+        <strong id="coord-z">—</strong>
+      </div>
 
-        // Константа для перевода пикселей в блоки Minecraft 
-        // (Поменяйте 1, если один пиксель картинки равен одному блоку в игре)
-        const PIXELS_TO_BLOCKS = 1; 
+      <span id="map-status" role="status">Подготовка карты...</span>
+    </section>
+  </main>
 
-        // 4. Показ координат Minecraft при клике
-        const popup = L.popup();
-        function onMapClick(e) {
-            // В CRS.Simple координата Y идет снизу вверх, а в пикселях сверху вниз,
-            // поэтому инвертируем Y для соответствия привычной сетке
-            const mcX = Math.round(e.latlng.lng * PIXELS_TO_BLOCKS);
-            const mcZ = Math.round(-e.latlng.lat * PIXELS_TO_BLOCKS);
-
-            popup
-                .setLatLng(e.latlng)
-                .setContent(`<b>Координаты Minecraft:</b><br>X: ${mcX}<br>Z: ${mcZ}`)
-                .openOn(map);
-        }
-        map.on('click', onMapClick);
-    </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>

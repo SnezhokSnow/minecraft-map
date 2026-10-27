@@ -1,0 +1,287 @@
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #100d0f;
+  color: #f5eeee;
+
+  --red: #d9364f;
+  --red-hover: #ed435c;
+  --red-dark: #8f2034;
+  --panel: #181215;
+  --panel-light: #21171b;
+  --border: #382127;
+  --muted: #a9979d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font: inherit;
+}
+
+/* Верхняя панель */
+
+.topbar {
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 76px;
+  padding: 12px 24px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.brand-icon {
+  display: grid;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #f04a60;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #d9364f, #831d32);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 0 22px rgb(217 54 79 / 16%);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.brand p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.15px;
+}
+
+/* Кнопки и счётчик */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+#tile-count {
+  color: #c6b5ba;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+#fit-map {
+  padding: 10px 15px;
+  border: 1px solid var(--red);
+  border-radius: 8px;
+  background: var(--red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+#fit-map:hover {
+  border-color: var(--red-hover);
+  background: var(--red-hover);
+}
+
+#fit-map:active {
+  transform: scale(0.98);
+}
+
+#fit-map:focus-visible {
+  outline: 2px solid #ff9aaa;
+  outline-offset: 3px;
+}
+
+/* Основная область карты */
+
+main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+#map {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: #110e10;
+}
+
+.leaflet-container {
+  background: #110e10;
+  font-family: inherit;
+}
+
+/* Чёткие пиксели PNG */
+
+.leaflet-image-layer {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Контролы Leaflet */
+
+.leaflet-control-zoom {
+  overflow: hidden;
+  border: 1px solid var(--border) !important;
+  border-radius: 9px !important;
+  box-shadow: 0 4px 18px rgb(0 0 0 / 25%) !important;
+}
+
+.leaflet-control-zoom a {
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  border-bottom-color: var(--border) !important;
+  background: var(--panel) !important;
+  color: #f4dce1 !important;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #382027 !important;
+  color: #ff6178 !important;
+}
+
+.leaflet-bar {
+  border: none !important;
+}
+
+/* Нижняя панель координат */
+
+.coordinate-panel {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 56px;
+  padding: 10px 24px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+}
+
+.coordinate-panel > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.coordinate-label {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid #572633;
+  border-radius: 6px;
+  background: #29171d;
+  color: #f05a70;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.coordinate-panel strong {
+  color: #f7e9ec;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+#map-status {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+/* Подсветка чанка */
+
+.chunk-hover-highlight {
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Выделение элементов клавиатурой */
+
+button:focus-visible {
+  outline: 2px solid #ff7185;
+  outline-offset: 3px;
+}
+
+/* Мобильная версия */
+
+@media (max-width: 600px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 13px;
+    padding: 14px 16px;
+  }
+
+  .brand h1 {
+    font-size: 18px;
+  }
+
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  #tile-count {
+    font-size: 11px;
+  }
+
+  #fit-map {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .coordinate-panel {
+    gap: 14px;
+    padding: 10px 14px;
+  }
+
+  #map-status {
+    max-width: 48%;
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,9 @@
+
+{
+  "name": "minecraft-interactive-map",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate-tiles.js"
+  }
+}
